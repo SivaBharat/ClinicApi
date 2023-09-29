@@ -29,6 +29,8 @@ public partial class Staff
 
     public byte[]? StaffImg { get; set; }
 
+    public string? Password { get; set; }
+
     public virtual Department? Dept { get; set; }
 
     public virtual Role? Role { get; set; }

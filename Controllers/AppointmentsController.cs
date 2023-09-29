@@ -24,10 +24,10 @@ namespace Clinic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
-          if (_context.Appointments == null)
-          {
-              return NotFound();
-          }
+            if (_context.Appointments == null)
+            {
+                return NotFound();
+            }
             return await _context.Appointments.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace Clinic.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(int id)
         {
-          if (_context.Appointments == null)
-          {
-              return NotFound();
-          }
+            if (_context.Appointments == null)
+            {
+                return NotFound();
+            }
             var appointment = await _context.Appointments.FindAsync(id);
 
             if (appointment == null)
@@ -85,10 +85,10 @@ namespace Clinic.Controllers
         [HttpPost]
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
         {
-          if (_context.Appointments == null)
-          {
-              return Problem("Entity set 'ClinicContext.Appointments'  is null.");
-          }
+            if (_context.Appointments == null)
+            {
+                return Problem("Entity set 'ClinicContext.Appointments'  is null.");
+            }
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 

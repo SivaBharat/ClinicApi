@@ -24,10 +24,10 @@ namespace Clinic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MedicalRecord>>> GetMedicalRecords()
         {
-          if (_context.MedicalRecords == null)
-          {
-              return NotFound();
-          }
+            if (_context.MedicalRecords == null)
+            {
+                return NotFound();
+            }
             return await _context.MedicalRecords.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace Clinic.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<MedicalRecord>> GetMedicalRecord(int id)
         {
-          if (_context.MedicalRecords == null)
-          {
-              return NotFound();
-          }
+            if (_context.MedicalRecords == null)
+            {
+                return NotFound();
+            }
             var medicalRecord = await _context.MedicalRecords.FindAsync(id);
 
             if (medicalRecord == null)
@@ -85,10 +85,10 @@ namespace Clinic.Controllers
         [HttpPost]
         public async Task<ActionResult<MedicalRecord>> PostMedicalRecord(MedicalRecord medicalRecord)
         {
-          if (_context.MedicalRecords == null)
-          {
-              return Problem("Entity set 'ClinicContext.MedicalRecords'  is null.");
-          }
+            if (_context.MedicalRecords == null)
+            {
+                return Problem("Entity set 'ClinicContext.MedicalRecords'  is null.");
+            }
             _context.MedicalRecords.Add(medicalRecord);
             await _context.SaveChangesAsync();
 

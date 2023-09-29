@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Clinic.Models;
 
 namespace Clinic.Models;
 
@@ -33,7 +34,10 @@ public partial class ClinicContext : DbContext
 
     public virtual DbSet<Staff> Staff { get; set; }
 
-   
+//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//        => optionsBuilder.UseSqlServer("Server=DESKTOP-F1TAIB5\\SQLEXPRESS2019;Database=Clinic;Trusted_Connection=True;TrustServerCertificate=True;");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Admin>(entity =>
@@ -132,6 +136,9 @@ public partial class ClinicContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false);
             entity.Property(e => e.JoiningDate).HasColumnType("date");
+            entity.Property(e => e.Password)
+                .HasMaxLength(20)
+                .IsUnicode(false);
             entity.Property(e => e.Qualification)
                 .HasMaxLength(15)
                 .IsUnicode(false);
@@ -237,6 +244,9 @@ public partial class ClinicContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false);
             entity.Property(e => e.JoiningDate).HasColumnType("date");
+            entity.Property(e => e.Password)
+                .HasMaxLength(20)
+                .IsUnicode(false);
             entity.Property(e => e.Position)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -257,4 +267,6 @@ public partial class ClinicContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+   public DbSet<Clinic.Models.LoginRequest>? LoginRequest { get; set; }
 }

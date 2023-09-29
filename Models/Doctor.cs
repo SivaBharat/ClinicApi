@@ -31,6 +31,8 @@ public partial class Doctor
 
     public byte[]? DoctorImg { get; set; }
 
+    public string? Password { get; set; }
+
     public virtual ICollection<AppointmentRequest> AppointmentRequests { get; set; } = new List<AppointmentRequest>();
 
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();

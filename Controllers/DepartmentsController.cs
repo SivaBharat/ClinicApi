@@ -24,10 +24,10 @@ namespace Clinic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
         {
-          if (_context.Departments == null)
-          {
-              return NotFound();
-          }
+            if (_context.Departments == null)
+            {
+                return NotFound();
+            }
             return await _context.Departments.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace Clinic.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Department>> GetDepartment(int id)
         {
-          if (_context.Departments == null)
-          {
-              return NotFound();
-          }
+            if (_context.Departments == null)
+            {
+                return NotFound();
+            }
             var department = await _context.Departments.FindAsync(id);
 
             if (department == null)
@@ -85,17 +85,17 @@ namespace Clinic.Controllers
         [HttpPost]
         public async Task<ActionResult<Department>> PostDepartment(Department department)
         {
-          if (_context.Departments == null)
-          {
-              return Problem("Entity set 'ClinicContext.Departments'  is null.");
-          }
+            if (_context.Departments == null)
+            {
+                return Problem("Entity set 'ClinicContext.Departments'  is null.");
+            }
             _context.Departments.Add(department);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDepartment", new { id = department.DeptId }, department);
         }
 
-        // DELETE: api/Departments/5
+        //// DELETE: api/Departments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDepartment(int id)
         {

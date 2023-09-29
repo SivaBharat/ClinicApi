@@ -24,10 +24,10 @@ namespace Clinic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Staff>>> GetStaff()
         {
-          if (_context.Staff == null)
-          {
-              return NotFound();
-          }
+            if (_context.Staff == null)
+            {
+                return NotFound();
+            }
             return await _context.Staff.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace Clinic.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Staff>> GetStaff(int id)
         {
-          if (_context.Staff == null)
-          {
-              return NotFound();
-          }
+            if (_context.Staff == null)
+            {
+                return NotFound();
+            }
             var staff = await _context.Staff.FindAsync(id);
 
             if (staff == null)

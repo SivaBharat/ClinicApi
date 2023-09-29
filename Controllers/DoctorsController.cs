@@ -24,10 +24,10 @@ namespace Clinic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctors()
         {
-          if (_context.Doctors == null)
-          {
-              return NotFound();
-          }
+            if (_context.Doctors == null)
+            {
+                return NotFound();
+            }
             return await _context.Doctors.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace Clinic.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Doctor>> GetDoctor(int id)
         {
-          if (_context.Doctors == null)
-          {
-              return NotFound();
-          }
+            if (_context.Doctors == null)
+            {
+                return NotFound();
+            }
             var doctor = await _context.Doctors.FindAsync(id);
 
             if (doctor == null)
@@ -80,7 +80,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        // POST: api/Doctors
+        //// POST: api/Doctors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Doctor>> PostDoctor(Doctor doctor)

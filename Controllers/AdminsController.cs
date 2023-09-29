@@ -24,10 +24,10 @@ namespace Clinic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Admin>>> GetAdmins()
         {
-          if (_context.Admins == null)
-          {
-              return NotFound();
-          }
+            if (_context.Admins == null)
+            {
+                return NotFound();
+            }
             return await _context.Admins.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace Clinic.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Admin>> GetAdmin(int id)
         {
-          if (_context.Admins == null)
-          {
-              return NotFound();
-          }
+            if (_context.Admins == null)
+            {
+                return NotFound();
+            }
             var admin = await _context.Admins.FindAsync(id);
 
             if (admin == null)
@@ -85,10 +85,10 @@ namespace Clinic.Controllers
         [HttpPost]
         public async Task<ActionResult<Admin>> PostAdmin(Admin admin)
         {
-          if (_context.Admins == null)
-          {
-              return Problem("Entity set 'ClinicContext.Admins'  is null.");
-          }
+            if (_context.Admins == null)
+            {
+                return Problem("Entity set 'ClinicContext.Admins'  is null.");
+            }
             _context.Admins.Add(admin);
             await _context.SaveChangesAsync();
 

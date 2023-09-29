@@ -24,10 +24,10 @@ namespace Clinic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppointmentRequest>>> GetAppointmentRequests()
         {
-          if (_context.AppointmentRequests == null)
-          {
-              return NotFound();
-          }
+            if (_context.AppointmentRequests == null)
+            {
+                return NotFound();
+            }
             return await _context.AppointmentRequests.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace Clinic.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<AppointmentRequest>> GetAppointmentRequest(int id)
         {
-          if (_context.AppointmentRequests == null)
-          {
-              return NotFound();
-          }
+            if (_context.AppointmentRequests == null)
+            {
+                return NotFound();
+            }
             var appointmentRequest = await _context.AppointmentRequests.FindAsync(id);
 
             if (appointmentRequest == null)
@@ -85,10 +85,10 @@ namespace Clinic.Controllers
         [HttpPost]
         public async Task<ActionResult<AppointmentRequest>> PostAppointmentRequest(AppointmentRequest appointmentRequest)
         {
-          if (_context.AppointmentRequests == null)
-          {
-              return Problem("Entity set 'ClinicContext.AppointmentRequests'  is null.");
-          }
+            if (_context.AppointmentRequests == null)
+            {
+                return Problem("Entity set 'ClinicContext.AppointmentRequests'  is null.");
+            }
             _context.AppointmentRequests.Add(appointmentRequest);
             try
             {

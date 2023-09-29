@@ -24,10 +24,10 @@ namespace Clinic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Patient>>> GetPatients()
         {
-          if (_context.Patients == null)
-          {
-              return NotFound();
-          }
+            if (_context.Patients == null)
+            {
+                return NotFound();
+            }
             return await _context.Patients.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace Clinic.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetPatient(int id)
         {
-          if (_context.Patients == null)
-          {
-              return NotFound();
-          }
+            if (_context.Patients == null)
+            {
+                return NotFound();
+            }
             var patient = await _context.Patients.FindAsync(id);
 
             if (patient == null)
@@ -90,7 +90,7 @@ namespace Clinic.Controllers
             //    return Problem("Entity set 'ClinicContext.Patients'  is null.");
             //}
             patient.RoleId = 4;
-            patient.RegistrationDate= DateTime.Now;
+            patient.RegistrationDate = DateTime.Now;
             _context.Patients.Add(patient);
             await _context.SaveChangesAsync();
 
