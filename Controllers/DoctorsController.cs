@@ -85,7 +85,7 @@ namespace Clinic.Controllers
         [HttpPost]
         public async Task<ActionResult<Doctor>> PostDoctor(Doctor doctor)
         {
-            var department = await _context.Departments.FindAsync(doctor.DeptId);
+            //var department = await _context.Departments.FindAsync(doctor.DeptId);
             //if (_context.Doctors == null)
             //{
             //    return Problem("Entity set 'ClinicContext.Doctors'  is null.");
