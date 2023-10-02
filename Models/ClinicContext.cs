@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Clinic.Models;
 
 namespace Clinic.Models;
 
@@ -21,6 +20,8 @@ public partial class ClinicContext : DbContext
     public virtual DbSet<Appointment> Appointments { get; set; }
 
     public virtual DbSet<AppointmentRequest> AppointmentRequests { get; set; }
+
+    public virtual DbSet<AppointmentRequest1> AppointmentRequests1 { get; set; }
 
     public virtual DbSet<Department> Departments { get; set; }
 
@@ -60,24 +61,22 @@ public partial class ClinicContext : DbContext
 
         modelBuilder.Entity<Appointment>(entity =>
         {
-            entity.HasKey(e => e.AppointmentId).HasName("PK__Appointm__8ECDFCC200B676CA");
-
-            entity.ToTable("Appointment");
+            entity.HasKey(e => e.AppointmentId).HasName("PK__Appointm__8ECDFCC227E27550");
 
             entity.Property(e => e.AppointmentProvidedDate).HasColumnType("date");
             entity.Property(e => e.AppointmentRequestId).HasColumnName("AppointmentRequestID");
 
             entity.HasOne(d => d.AppointmentRequest).WithMany(p => p.Appointments)
                 .HasForeignKey(d => d.AppointmentRequestId)
-                .HasConstraintName("FK__Appointme__Appoi__4BAC3F29");
+                .HasConstraintName("FK__Appointme__Appoi__60A75C0F");
 
             entity.HasOne(d => d.Doctor).WithMany(p => p.Appointments)
                 .HasForeignKey(d => d.DoctorId)
-                .HasConstraintName("FK__Appointme__Docto__4D94879B");
+                .HasConstraintName("FK__Appointme__Docto__628FA481");
 
             entity.HasOne(d => d.Patient).WithMany(p => p.Appointments)
                 .HasForeignKey(d => d.PatientId)
-                .HasConstraintName("FK__Appointme__Patie__4CA06362");
+                .HasConstraintName("FK__Appointme__Patie__619B8048");
         });
 
         modelBuilder.Entity<AppointmentRequest>(entity =>
@@ -98,6 +97,24 @@ public partial class ClinicContext : DbContext
             entity.HasOne(d => d.Patient).WithMany(p => p.AppointmentRequests)
                 .HasForeignKey(d => d.PatientId)
                 .HasConstraintName("FK__Appointme__Patie__47DBAE45");
+        });
+
+        modelBuilder.Entity<AppointmentRequest1>(entity =>
+        {
+            entity.HasKey(e => e.AppointmentRequestId).HasName("PK__Appointm__302585D9CFAD5A6D");
+
+            entity.ToTable("AppointmentRequests");
+
+            entity.Property(e => e.AppointmentRequestId).HasColumnName("AppointmentRequestID");
+            entity.Property(e => e.RequestDate).HasColumnType("date");
+
+            entity.HasOne(d => d.Doctor).WithMany(p => p.AppointmentRequest1s)
+                .HasForeignKey(d => d.DoctorId)
+                .HasConstraintName("FK__Appointme__Docto__5DCAEF64");
+
+            entity.HasOne(d => d.Patient).WithMany(p => p.AppointmentRequest1s)
+                .HasForeignKey(d => d.PatientId)
+                .HasConstraintName("FK__Appointme__Patie__5CD6CB2B");
         });
 
         modelBuilder.Entity<Department>(entity =>
@@ -157,7 +174,9 @@ public partial class ClinicContext : DbContext
 
         modelBuilder.Entity<MedicalRecord>(entity =>
         {
-            entity.HasKey(e => e.RecordId).HasName("PK__MedicalR__FBDF78E90FDC7E67");
+            entity.HasKey(e => e.RecordId).HasName("PK__MedicalR__FBDF78E9B90B324E");
+
+            entity.ToTable("MedicalRecord");
 
             entity.Property(e => e.Diagnosis).IsUnicode(false);
             entity.Property(e => e.Prescription).IsUnicode(false);
@@ -167,11 +186,11 @@ public partial class ClinicContext : DbContext
 
             entity.HasOne(d => d.Doctor).WithMany(p => p.MedicalRecords)
                 .HasForeignKey(d => d.DoctorId)
-                .HasConstraintName("FK__MedicalRe__Docto__5165187F");
+                .HasConstraintName("FK__MedicalRe__Docto__6754599E");
 
             entity.HasOne(d => d.Patient).WithMany(p => p.MedicalRecords)
                 .HasForeignKey(d => d.PatientId)
-                .HasConstraintName("FK__MedicalRe__Patie__5070F446");
+                .HasConstraintName("FK__MedicalRe__Patie__66603565");
         });
 
         modelBuilder.Entity<Patient>(entity =>
@@ -267,6 +286,4 @@ public partial class ClinicContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-   public DbSet<Clinic.Models.LoginRequest>? LoginRequest { get; set; }
 }
