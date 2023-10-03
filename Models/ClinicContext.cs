@@ -108,6 +108,10 @@ public partial class ClinicContext : DbContext
             entity.Property(e => e.AppointmentRequestId).HasColumnName("AppointmentRequestID");
             entity.Property(e => e.RequestDate).HasColumnType("date");
 
+            entity.HasOne(d => d.Dept).WithMany(p => p.AppointmentRequest1s)
+                .HasForeignKey(d => d.DeptId)
+                .HasConstraintName("FK__Appointme__DeptI__6EF57B66");
+
             entity.HasOne(d => d.Doctor).WithMany(p => p.AppointmentRequest1s)
                 .HasForeignKey(d => d.DoctorId)
                 .HasConstraintName("FK__Appointme__Docto__5DCAEF64");

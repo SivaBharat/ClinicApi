@@ -13,6 +13,10 @@ public partial class AppointmentRequest1
 
     public DateTime? RequestDate { get; set; }
 
+    public int? DeptId { get; set; }
+
+    public virtual Department? Dept { get; set; }
+
     public virtual Doctor? Doctor { get; set; }
 
     public virtual Patient? Patient { get; set; }

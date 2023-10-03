@@ -32,7 +32,7 @@ namespace Clinic.Controllers
             if (admin != null)
             {
                 // Credentials are valid
-                return Ok(new { success = true, roleId = admin.RoleId,userId=admin.AdminId });
+                return Ok(new { success = true, roleId = admin.RoleId, userId = admin.AdminId });
             }
 
             // Check if the credentials are in the Doctors table
@@ -42,7 +42,7 @@ namespace Clinic.Controllers
             if (doctor != null)
             {
                 // Credentials are valid
-                return Ok(new { success = true, roleId = doctor.RoleId,userId=doctor.DoctorId });
+                return Ok(new { success = true, roleId = doctor.RoleId, userId = doctor.DoctorId });
             }
 
             // Check if the credentials are in the Staff table
@@ -52,7 +52,7 @@ namespace Clinic.Controllers
             if (staff != null)
             {
                 // Credentials are valid
-                return Ok(new { success = true, roleId = staff.RoleId, userId = staff.StaffId });
+                return Ok(new { success = true, roleId = staff.RoleId, userId = staff.StaffId, departmentId = staff.DeptId });
             }
 
             // Check if the credentials are in the Patients table
