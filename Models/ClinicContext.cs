@@ -35,9 +35,9 @@ public partial class ClinicContext : DbContext
 
     public virtual DbSet<Staff> Staff { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=DESKTOP-F1TAIB5\\SQLEXPRESS2019;Database=Clinic;Trusted_Connection=True;TrustServerCertificate=True;");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-F1TAIB5\\SQLEXPRESS2019;Database=Clinic;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -63,12 +63,15 @@ public partial class ClinicContext : DbContext
         {
             entity.HasKey(e => e.AppointmentId).HasName("PK__Appointm__8ECDFCC227E27550");
 
-            entity.Property(e => e.AppointmentProvidedDate).HasColumnType("date");
-            entity.Property(e => e.AppointmentRequestId).HasColumnName("AppointmentRequestID");
+            entity.Property(e => e.AppointmentProvidedDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.AppointmentRequest).WithMany(p => p.Appointments)
                 .HasForeignKey(d => d.AppointmentRequestId)
-                .HasConstraintName("FK__Appointme__Appoi__60A75C0F");
+                .HasConstraintName("FK__Appointme__Appoi__01142BA1");
+
+            entity.HasOne(d => d.Dept).WithMany(p => p.Appointments)
+                .HasForeignKey(d => d.DeptId)
+                .HasConstraintName("FK__Appointme__DeptI__02084FDA");
 
             entity.HasOne(d => d.Doctor).WithMany(p => p.Appointments)
                 .HasForeignKey(d => d.DoctorId)
@@ -187,6 +190,10 @@ public partial class ClinicContext : DbContext
             entity.Property(e => e.Remark).IsUnicode(false);
             entity.Property(e => e.Symptoms).IsUnicode(false);
             entity.Property(e => e.VisitDate).HasColumnType("date");
+
+            entity.HasOne(d => d.Dept).WithMany(p => p.MedicalRecords)
+                .HasForeignKey(d => d.DeptId)
+                .HasConstraintName("FK__MedicalRe__DeptI__02FC7413");
 
             entity.HasOne(d => d.Doctor).WithMany(p => p.MedicalRecords)
                 .HasForeignKey(d => d.DoctorId)

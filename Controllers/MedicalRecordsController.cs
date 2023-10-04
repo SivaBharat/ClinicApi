@@ -89,6 +89,7 @@ namespace Clinic.Controllers
             {
                 return Problem("Entity set 'ClinicContext.MedicalRecords'  is null.");
             }
+            medicalRecord.VisitDate=DateTime.Now;
             _context.MedicalRecords.Add(medicalRecord);
             await _context.SaveChangesAsync();
 

@@ -11,7 +11,11 @@ public partial class Department
 
     public virtual ICollection<AppointmentRequest1> AppointmentRequest1s { get; set; } = new List<AppointmentRequest1>();
 
+    public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+
     public virtual ICollection<Doctor> Doctors { get; set; } = new List<Doctor>();
+
+    public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
 
     public virtual ICollection<Staff> Staff { get; set; } = new List<Staff>();
 }

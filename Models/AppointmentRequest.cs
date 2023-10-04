@@ -13,8 +13,6 @@ public partial class AppointmentRequest
 
     public DateTime? RequestDate { get; set; }
 
-    public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
-
     public virtual Doctor? Doctor { get; set; }
 
     public virtual Patient? Patient { get; set; }
