@@ -29,9 +29,9 @@ public partial class Doctor
 
     public DateTime? JoiningDate { get; set; }
 
-    public byte[]? DoctorImg { get; set; }
-
     public string? Password { get; set; }
+
+    public string? DoctorImg { get; set; }
 
     public virtual ICollection<AppointmentRequest1> AppointmentRequest1s { get; set; } = new List<AppointmentRequest1>();
 

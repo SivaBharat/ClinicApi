@@ -85,10 +85,7 @@ namespace Clinic.Controllers
         [HttpPost]
         public async Task<ActionResult<AppointmentRequest1>> PostAppointmentRequest1(AppointmentRequest1 appointmentRequest1)
         {
-          if (_context.AppointmentRequests1 == null)
-          {
-              return Problem("Entity set 'ClinicContext.AppointmentRequests1'  is null.");
-          }
+            appointmentRequest1.Status = 0;
             _context.AppointmentRequests1.Add(appointmentRequest1);
             await _context.SaveChangesAsync();
 

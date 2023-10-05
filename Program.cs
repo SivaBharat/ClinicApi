@@ -1,6 +1,6 @@
 using Clinic.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.FileProviders;
 namespace Clinic
 {
     public class Program
@@ -40,7 +40,12 @@ namespace Clinic
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources")
+            });
             app.UseAuthorization();
             app.UseCors("AllowOrigin");
 

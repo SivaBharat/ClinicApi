@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Clinic.Models;
+using Microsoft.Data.SqlClient;
 
 namespace Clinic.Controllers
 {
@@ -32,6 +33,7 @@ namespace Clinic.Controllers
             if (admin != null)
             {
                 // Credentials are valid
+                await _context.Database.ExecuteSqlRawAsync("EXEC DeleteExpiredAppointments");
                 return Ok(new { success = true, roleId = admin.RoleId, userId = admin.AdminId });
             }
 
@@ -42,6 +44,7 @@ namespace Clinic.Controllers
             if (doctor != null)
             {
                 // Credentials are valid
+                await _context.Database.ExecuteSqlRawAsync("EXEC DeleteExpiredAppointments");
                 return Ok(new { success = true, roleId = doctor.RoleId, userId = doctor.DoctorId });
             }
 
@@ -52,6 +55,7 @@ namespace Clinic.Controllers
             if (staff != null)
             {
                 // Credentials are valid
+                await _context.Database.ExecuteSqlRawAsync("EXEC DeleteExpiredAppointments");
                 return Ok(new { success = true, roleId = staff.RoleId, userId = staff.StaffId, departmentId = staff.DeptId });
             }
 
@@ -62,6 +66,7 @@ namespace Clinic.Controllers
             if (patient != null)
             {
                 // Credentials are valid
+                await _context.Database.ExecuteSqlRawAsync("EXEC DeleteExpiredAppointments");
                 return Ok(new { success = true, roleId = patient.RoleId, userId = patient.PatientId });
             }
 

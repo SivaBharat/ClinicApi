@@ -27,9 +27,9 @@ public partial class Staff
 
     public DateTime? JoiningDate { get; set; }
 
-    public byte[]? StaffImg { get; set; }
-
     public string? Password { get; set; }
+
+    public string? StaffImg { get; set; }
 
     public virtual Department? Dept { get; set; }
 

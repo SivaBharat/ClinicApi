@@ -15,6 +15,8 @@ public partial class AppointmentRequest1
 
     public int? DeptId { get; set; }
 
+    public int? Status { get; set; }
+
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 
     public virtual Department? Dept { get; set; }

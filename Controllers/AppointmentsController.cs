@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
+using Microsoft.Data.SqlClient;
 
 namespace Clinic.Controllers
 {
@@ -91,7 +92,7 @@ namespace Clinic.Controllers
             }
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
-
+            await _context.Database.ExecuteSqlRawAsync("EXEC UpdateStatusIfAppointmentExists");
             return CreatedAtAction("GetAppointment", new { id = appointment.AppointmentId }, appointment);
         }
 

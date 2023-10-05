@@ -29,7 +29,7 @@ public partial class Patient
 
     public string? Password { get; set; }
 
-    public byte[]? PatientImg { get; set; }
+    public string? PatientImg { get; set; }
 
     public virtual ICollection<AppointmentRequest1> AppointmentRequest1s { get; set; } = new List<AppointmentRequest1>();
 
