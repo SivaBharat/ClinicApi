@@ -95,7 +95,7 @@ namespace Clinic.Controllers
             await _context.Database.ExecuteSqlRawAsync("EXEC UpdateStatusIfAppointmentExists");
             return CreatedAtAction("GetAppointment", new { id = appointment.AppointmentId }, appointment);
         }
-
+        
         // DELETE: api/Appointments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointment(int id)
