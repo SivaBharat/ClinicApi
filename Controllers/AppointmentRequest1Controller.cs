@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
-using Clinic.CustomAuthorize;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(CustomExceptionFilter))]
+    [Authorize]
     public class AppointmentRequest1Controller : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -22,7 +23,6 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        [Block]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppointmentRequest1>>> GetAppointmentRequests1()
         {
@@ -33,7 +33,7 @@ namespace Clinic.Controllers
             return await _context.AppointmentRequests1.ToListAsync();
         }
 
-        [Block]
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<AppointmentRequest1>> GetAppointmentRequest1(int id)
         {
@@ -51,7 +51,7 @@ namespace Clinic.Controllers
             return appointmentRequest1;
         }
 
-        [Block]
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAppointmentRequest1(int id, AppointmentRequest1 appointmentRequest1)
         {
@@ -81,7 +81,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        [Block]
+       
         [HttpPost]
         public async Task<ActionResult<AppointmentRequest1>> PostAppointmentRequest1(AppointmentRequest1 appointmentRequest1)
         {
@@ -92,7 +92,7 @@ namespace Clinic.Controllers
             return CreatedAtAction("GetAppointmentRequest1", new { id = appointmentRequest1.AppointmentRequestId }, appointmentRequest1);
         }
 
-        [Block]
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointmentRequest1(int id)
         {

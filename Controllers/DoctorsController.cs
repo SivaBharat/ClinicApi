@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using MailKit.Net.Smtp;
 using MimeKit;
-using Clinic.CustomAuthorize;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Clinic.Controllers
 {
@@ -24,8 +25,9 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        [Block]
+        //[Block]
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctors()
         {
             if (_context.Doctors == null)
@@ -35,8 +37,9 @@ namespace Clinic.Controllers
             return await _context.Doctors.ToListAsync();
         }
 
-        [Block]
+       
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Doctor>> GetDoctor(int id)
         {
             if (_context.Doctors == null)
@@ -53,8 +56,9 @@ namespace Clinic.Controllers
             return doctor;
         }
 
-        [Block]
+      
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutDoctor(int id, Doctor doctor)
         {
             if (id != doctor.DoctorId)
@@ -83,8 +87,9 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        [Block]
+        
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Doctor>> PostDoctor(Doctor doctor)
         {            
             doctor.RoleId = 2;
@@ -136,8 +141,9 @@ namespace Clinic.Controllers
             }
             return Content("Send Email method executed");
         }
-        [Block]
+       
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteDoctor(int id)
         {
             if (_context.Doctors == null)

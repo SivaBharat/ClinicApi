@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using Microsoft.Data.SqlClient;
-using Clinic.CustomAuthorize;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(CustomExceptionFilter))]
+    [Authorize]
     public class AppointmentsController : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -23,7 +24,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        [Block]
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
@@ -34,7 +35,7 @@ namespace Clinic.Controllers
             return await _context.Appointments.ToListAsync();
         }
 
-        [Block]
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(int id)
         {
@@ -52,7 +53,7 @@ namespace Clinic.Controllers
             return appointment;
         }
 
-        [Block]
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAppointment(int id, Appointment appointment)
         {
@@ -82,7 +83,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        [Block]
+        
         [HttpPost]
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
         {
@@ -96,7 +97,6 @@ namespace Clinic.Controllers
             return CreatedAtAction("GetAppointment", new { id = appointment.AppointmentId }, appointment);
         }
 
-        [Block]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {

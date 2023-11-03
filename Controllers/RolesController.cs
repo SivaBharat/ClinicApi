@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
-using Clinic.CustomAuthorize;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(CustomExceptionFilter))]
+    [Authorize]
     public class RolesController : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -22,7 +23,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        [Block]
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
         {
@@ -33,7 +34,7 @@ namespace Clinic.Controllers
             return await _context.Roles.ToListAsync();
         }
 
-        [Block]
+       
         [HttpGet("{id}")]
         public async Task<ActionResult<Role>> GetRole(int id)
         {
@@ -51,7 +52,7 @@ namespace Clinic.Controllers
             return role;
         }
 
-        [Block]
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRole(int id, Role role)
         {
@@ -81,7 +82,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        [Block]
+       
         [HttpPost]
         public async Task<ActionResult<Role>> PostRole(Role role)
         {
@@ -109,7 +110,7 @@ namespace Clinic.Controllers
             return CreatedAtAction("GetRole", new { id = role.RoleId }, role);
         }
 
-        [Block]
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {

@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
-using Clinic.CustomAuthorize;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Clinic.Controllers
 {
@@ -22,8 +23,8 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        [Block]
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
         {
             if (_context.Departments == null)
@@ -33,8 +34,8 @@ namespace Clinic.Controllers
             return await _context.Departments.ToListAsync();
         }
 
-        [Block]
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Department>> GetDepartment(int id)
         {
             if (_context.Departments == null)
@@ -51,8 +52,9 @@ namespace Clinic.Controllers
             return department;
         }
 
-        [Block]
+     
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutDepartment(int id, Department department)
         {
             if (id != department.DeptId)
@@ -81,8 +83,9 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        [Block]
+        
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Department>> PostDepartment(Department department)
         {
             if (_context.Departments == null)
@@ -95,8 +98,9 @@ namespace Clinic.Controllers
             return CreatedAtAction("GetDepartment", new { id = department.DeptId }, department);
         }
 
-        [Block]
+        
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteDepartment(int id)
         {
             if (_context.Departments == null)

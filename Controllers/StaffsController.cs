@@ -8,13 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using MailKit.Net.Smtp;
 using MimeKit;
-using Clinic.CustomAuthorize;
+using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(CustomExceptionFilter))]
+    [Authorize(Roles = "Admin")]
     public class StaffsController : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -24,8 +26,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        [Block]
-        [HttpGet]
+        [HttpGet]        
         public async Task<ActionResult<IEnumerable<Staff>>> GetStaff()
         {
             if (_context.Staff == null)
@@ -35,7 +36,7 @@ namespace Clinic.Controllers
             return await _context.Staff.ToListAsync();
         }
 
-        [Block]
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<Staff>> GetStaff(int id)
         {
@@ -53,7 +54,7 @@ namespace Clinic.Controllers
             return staff;
         }
 
-        [Block]
+       
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStaff(int id, Staff staff)
         {
@@ -83,7 +84,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        [Block]
+        
         [HttpPost]
         public async Task<ActionResult<Staff>> PostStaff(Staff staff)
         {            
@@ -137,7 +138,7 @@ namespace Clinic.Controllers
             }
             return Content("Send Email method executed");
         }
-        [Block]
+       
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStaff(int id)
         {
