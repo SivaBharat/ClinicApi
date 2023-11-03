@@ -8,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using MailKit.Net.Smtp;
 using MimeKit;
+using Clinic.CustomAuthorize;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(CustomExceptionFilter))]
     public class DoctorsController : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -22,7 +24,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        // GET: api/Doctors
+        [Block]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctors()
         {
@@ -33,7 +35,7 @@ namespace Clinic.Controllers
             return await _context.Doctors.ToListAsync();
         }
 
-        // GET: api/Doctors/5
+        [Block]
         [HttpGet("{id}")]
         public async Task<ActionResult<Doctor>> GetDoctor(int id)
         {
@@ -51,8 +53,7 @@ namespace Clinic.Controllers
             return doctor;
         }
 
-        // PUT: api/Doctors/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDoctor(int id, Doctor doctor)
         {
@@ -82,8 +83,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        //// POST: api/Doctors
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPost]
         public async Task<ActionResult<Doctor>> PostDoctor(Doctor doctor)
         {            
@@ -136,7 +136,7 @@ namespace Clinic.Controllers
             }
             return Content("Send Email method executed");
         }
-        // DELETE: api/Doctors/5
+        [Block]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDoctor(int id)
         {

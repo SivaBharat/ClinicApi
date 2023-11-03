@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
+using Clinic.CustomAuthorize;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(CustomExceptionFilter))]
     public class AppointmentRequest1Controller : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -20,7 +22,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        // GET: api/AppointmentRequest1
+        [Block]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppointmentRequest1>>> GetAppointmentRequests1()
         {
@@ -31,7 +33,7 @@ namespace Clinic.Controllers
             return await _context.AppointmentRequests1.ToListAsync();
         }
 
-        // GET: api/AppointmentRequest1/5
+        [Block]
         [HttpGet("{id}")]
         public async Task<ActionResult<AppointmentRequest1>> GetAppointmentRequest1(int id)
         {
@@ -49,8 +51,7 @@ namespace Clinic.Controllers
             return appointmentRequest1;
         }
 
-        // PUT: api/AppointmentRequest1/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAppointmentRequest1(int id, AppointmentRequest1 appointmentRequest1)
         {
@@ -80,8 +81,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        // POST: api/AppointmentRequest1
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPost]
         public async Task<ActionResult<AppointmentRequest1>> PostAppointmentRequest1(AppointmentRequest1 appointmentRequest1)
         {
@@ -92,7 +92,7 @@ namespace Clinic.Controllers
             return CreatedAtAction("GetAppointmentRequest1", new { id = appointmentRequest1.AppointmentRequestId }, appointmentRequest1);
         }
 
-        // DELETE: api/AppointmentRequest1/5
+        [Block]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointmentRequest1(int id)
         {

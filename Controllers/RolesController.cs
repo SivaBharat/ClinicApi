@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
+using Clinic.CustomAuthorize;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(CustomExceptionFilter))]
     public class RolesController : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -20,7 +22,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        // GET: api/Roles
+        [Block]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
         {
@@ -31,7 +33,7 @@ namespace Clinic.Controllers
             return await _context.Roles.ToListAsync();
         }
 
-        // GET: api/Roles/5
+        [Block]
         [HttpGet("{id}")]
         public async Task<ActionResult<Role>> GetRole(int id)
         {
@@ -49,8 +51,7 @@ namespace Clinic.Controllers
             return role;
         }
 
-        // PUT: api/Roles/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRole(int id, Role role)
         {
@@ -80,8 +81,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        // POST: api/Roles
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPost]
         public async Task<ActionResult<Role>> PostRole(Role role)
         {
@@ -109,7 +109,7 @@ namespace Clinic.Controllers
             return CreatedAtAction("GetRole", new { id = role.RoleId }, role);
         }
 
-        // DELETE: api/Roles/5
+        [Block]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {

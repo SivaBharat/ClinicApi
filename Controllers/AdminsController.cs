@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
+using Clinic.CustomAuthorize;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(CustomExceptionFilter))]
     public class AdminsController : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -20,7 +22,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        // GET: api/Admins
+        [Block]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Admin>>> GetAdmins()
         {
@@ -31,7 +33,7 @@ namespace Clinic.Controllers
             return await _context.Admins.ToListAsync();
         }
 
-        // GET: api/Admins/5
+        [Block]
         [HttpGet("{id}")]
         public async Task<ActionResult<Admin>> GetAdmin(int id)
         {
@@ -48,9 +50,7 @@ namespace Clinic.Controllers
 
             return admin;
         }
-
-        // PUT: api/Admins/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAdmin(int id, Admin admin)
         {
@@ -80,8 +80,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        // POST: api/Admins
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPost]
         public async Task<ActionResult<Admin>> PostAdmin(Admin admin)
         {
@@ -95,7 +94,7 @@ namespace Clinic.Controllers
             return CreatedAtAction("GetAdmin", new { id = admin.AdminId }, admin);
         }
 
-        // DELETE: api/Admins/5
+        [Block]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAdmin(int id)
         {

@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
+using Clinic.CustomAuthorize;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(CustomExceptionFilter))]
     public class MedicalRecordsController : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -20,7 +22,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        // GET: api/MedicalRecords
+        [Block]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MedicalRecord>>> GetMedicalRecords()
         {
@@ -31,7 +33,7 @@ namespace Clinic.Controllers
             return await _context.MedicalRecords.ToListAsync();
         }
 
-        // GET: api/MedicalRecords/5
+        [Block]
         [HttpGet("{id}")]
         public async Task<ActionResult<MedicalRecord>> GetMedicalRecord(int id)
         {
@@ -49,8 +51,7 @@ namespace Clinic.Controllers
             return medicalRecord;
         }
 
-        // PUT: api/MedicalRecords/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMedicalRecord(int id, MedicalRecord medicalRecord)
         {
@@ -80,8 +81,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        // POST: api/MedicalRecords
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPost]
         public async Task<ActionResult<MedicalRecord>> PostMedicalRecord(MedicalRecord medicalRecord)
         {
@@ -96,7 +96,7 @@ namespace Clinic.Controllers
             return CreatedAtAction("GetMedicalRecord", new { id = medicalRecord.RecordId }, medicalRecord);
         }
 
-        // DELETE: api/MedicalRecords/5
+        [Block]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMedicalRecord(int id)
         {

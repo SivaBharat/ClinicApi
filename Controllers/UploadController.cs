@@ -5,6 +5,7 @@ namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(CustomExceptionFilter))]
     public class UploadController : ControllerBase
     {
         [HttpPost, DisableRequestSizeLimit]

@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using Microsoft.Data.SqlClient;
+using Clinic.CustomAuthorize;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(CustomExceptionFilter))]
     public class AppointmentsController : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -21,7 +23,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        // GET: api/Appointments
+        [Block]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
@@ -32,7 +34,7 @@ namespace Clinic.Controllers
             return await _context.Appointments.ToListAsync();
         }
 
-        // GET: api/Appointments/5
+        [Block]
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(int id)
         {
@@ -50,8 +52,7 @@ namespace Clinic.Controllers
             return appointment;
         }
 
-        // PUT: api/Appointments/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAppointment(int id, Appointment appointment)
         {
@@ -81,8 +82,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        // POST: api/Appointments
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPost]
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
         {
@@ -95,8 +95,8 @@ namespace Clinic.Controllers
             await _context.Database.ExecuteSqlRawAsync("EXEC UpdateStatusIfAppointmentExists");
             return CreatedAtAction("GetAppointment", new { id = appointment.AppointmentId }, appointment);
         }
-        
-        // DELETE: api/Appointments/5
+
+        [Block]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {

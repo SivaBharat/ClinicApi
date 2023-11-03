@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
+using Clinic.CustomAuthorize;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(CustomExceptionFilter))]
     public class PatientsController : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -20,7 +22,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        // GET: api/Patients
+        [Block]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Patient>>> GetPatients()
         {
@@ -31,7 +33,7 @@ namespace Clinic.Controllers
             return await _context.Patients.ToListAsync();
         }
 
-        // GET: api/Patients/5
+        [Block]
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetPatient(int id)
         {
@@ -49,8 +51,7 @@ namespace Clinic.Controllers
             return patient;
         }
 
-        // PUT: api/Patients/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPatient(int id, Patient patient)
         {
@@ -80,8 +81,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        // POST: api/Patients
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPost]
         public async Task<ActionResult<Patient>> PostPatient(Patient patient)
         {
@@ -97,7 +97,7 @@ namespace Clinic.Controllers
             return CreatedAtAction("GetPatient", new { id = patient.PatientId }, patient);
         }
 
-        // DELETE: api/Patients/5
+        [Block]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePatient(int id)
         {

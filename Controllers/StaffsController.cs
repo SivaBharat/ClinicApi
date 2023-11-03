@@ -8,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using MailKit.Net.Smtp;
 using MimeKit;
+using Clinic.CustomAuthorize;
 
 namespace Clinic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(CustomExceptionFilter))]
     public class StaffsController : ControllerBase
     {
         private readonly ClinicContext _context;
@@ -22,7 +24,7 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-        // GET: api/Staffs
+        [Block]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Staff>>> GetStaff()
         {
@@ -33,7 +35,7 @@ namespace Clinic.Controllers
             return await _context.Staff.ToListAsync();
         }
 
-        // GET: api/Staffs/5
+        [Block]
         [HttpGet("{id}")]
         public async Task<ActionResult<Staff>> GetStaff(int id)
         {
@@ -51,8 +53,7 @@ namespace Clinic.Controllers
             return staff;
         }
 
-        // PUT: api/Staffs/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStaff(int id, Staff staff)
         {
@@ -82,8 +83,7 @@ namespace Clinic.Controllers
             return NoContent();
         }
 
-        // POST: api/Staffs
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Block]
         [HttpPost]
         public async Task<ActionResult<Staff>> PostStaff(Staff staff)
         {            
@@ -137,7 +137,7 @@ namespace Clinic.Controllers
             }
             return Content("Send Email method executed");
         }
-        // DELETE: api/Staffs/5
+        [Block]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStaff(int id)
         {
