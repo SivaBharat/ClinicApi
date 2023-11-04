@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -17,12 +12,10 @@ namespace Clinic.Controllers
     public class AdminsController : ControllerBase
     {
         private readonly ClinicContext _context;
-
         public AdminsController(ClinicContext context)
         {
             _context = context;
         }
-
         
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Admin>>> GetAdmins()
@@ -33,7 +26,6 @@ namespace Clinic.Controllers
             }
             return await _context.Admins.ToListAsync();
         }
-
       
         [HttpGet("{id}")]
         public async Task<ActionResult<Admin>> GetAdmin(int id)
@@ -43,12 +35,10 @@ namespace Clinic.Controllers
                 return NotFound();
             }
             var admin = await _context.Admins.FindAsync(id);
-
             if (admin == null)
             {
                 return NotFound();
             }
-
             return admin;
         }
      
@@ -59,9 +49,7 @@ namespace Clinic.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(admin).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -77,10 +65,8 @@ namespace Clinic.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
         
         [HttpPost]
         public async Task<ActionResult<Admin>> PostAdmin(Admin admin)
@@ -91,10 +77,8 @@ namespace Clinic.Controllers
             }
             _context.Admins.Add(admin);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetAdmin", new { id = admin.AdminId }, admin);
         }
-
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAdmin(int id)
@@ -108,10 +92,8 @@ namespace Clinic.Controllers
             {
                 return NotFound();
             }
-
             _context.Admins.Remove(admin);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -17,7 +12,6 @@ namespace Clinic.Controllers
     public class MedicalRecordsController : ControllerBase
     {
         private readonly ClinicContext _context;
-
         public MedicalRecordsController(ClinicContext context)
         {
             _context = context;
@@ -32,7 +26,6 @@ namespace Clinic.Controllers
             }
             return await _context.MedicalRecords.ToListAsync();
         }
-
         
         [HttpGet("{id}")]
         public async Task<ActionResult<MedicalRecord>> GetMedicalRecord(int id)
@@ -50,7 +43,6 @@ namespace Clinic.Controllers
 
             return medicalRecord;
         }
-
         
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMedicalRecord(int id, MedicalRecord medicalRecord)
@@ -59,9 +51,7 @@ namespace Clinic.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(medicalRecord).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -77,7 +67,6 @@ namespace Clinic.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
@@ -91,10 +80,8 @@ namespace Clinic.Controllers
             medicalRecord.VisitDate=DateTime.Now;
             _context.MedicalRecords.Add(medicalRecord);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetMedicalRecord", new { id = medicalRecord.RecordId }, medicalRecord);
         }
-
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMedicalRecord(int id)
@@ -108,10 +95,8 @@ namespace Clinic.Controllers
             {
                 return NotFound();
             }
-
             _context.MedicalRecords.Remove(medicalRecord);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

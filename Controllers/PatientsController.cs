@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -17,12 +12,10 @@ namespace Clinic.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly ClinicContext _context;
-
         public PatientsController(ClinicContext context)
         {
             _context = context;
         }
-
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Patient>>> GetPatients()
@@ -33,7 +26,6 @@ namespace Clinic.Controllers
             }
             return await _context.Patients.ToListAsync();
         }
-
       
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetPatient(int id)
@@ -51,7 +43,6 @@ namespace Clinic.Controllers
 
             return patient;
         }
-
         
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPatient(int id, Patient patient)
@@ -60,9 +51,7 @@ namespace Clinic.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(patient).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -78,26 +67,18 @@ namespace Clinic.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
     
         [HttpPost]
         public async Task<ActionResult<Patient>> PostPatient(Patient patient)
-        {
-            //if (_context.Patients == null)
-            //{
-            //    return Problem("Entity set 'ClinicContext.Patients'  is null.");
-            //}
+        {            
             patient.RoleId = 4;
             patient.RegistrationDate = DateTime.Now;
             _context.Patients.Add(patient);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetPatient", new { id = patient.PatientId }, patient);
         }
-
        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePatient(int id)
@@ -111,10 +92,8 @@ namespace Clinic.Controllers
             {
                 return NotFound();
             }
-
             _context.Patients.Remove(patient);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

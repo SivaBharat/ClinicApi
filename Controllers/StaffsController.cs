@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using MailKit.Net.Smtp;
 using MimeKit;
-using System.Data;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Clinic.Controllers
@@ -20,7 +14,6 @@ namespace Clinic.Controllers
     public class StaffsController : ControllerBase
     {
         private readonly ClinicContext _context;
-
         public StaffsController(ClinicContext context)
         {
             _context = context;
@@ -35,7 +28,6 @@ namespace Clinic.Controllers
             }
             return await _context.Staff.ToListAsync();
         }
-
         
         [HttpGet("{id}")]
         public async Task<ActionResult<Staff>> GetStaff(int id)
@@ -53,7 +45,6 @@ namespace Clinic.Controllers
 
             return staff;
         }
-
        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStaff(int id, Staff staff)
@@ -62,9 +53,7 @@ namespace Clinic.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(staff).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -80,10 +69,8 @@ namespace Clinic.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
         
         [HttpPost]
         public async Task<ActionResult<Staff>> PostStaff(Staff staff)
@@ -92,7 +79,6 @@ namespace Clinic.Controllers
             staff.JoiningDate = DateTime.Now;
             _context.Staff.Add(staff);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetStaff", new { id = staff.StaffId }, staff);
         }
         [HttpPost("SendMail")]
@@ -157,7 +143,6 @@ namespace Clinic.Controllers
 
             return NoContent();
         }
-
         private bool StaffExists(int id)
         {
             return (_context.Staff?.Any(e => e.StaffId == id)).GetValueOrDefault();

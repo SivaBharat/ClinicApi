@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
-using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Clinic.Controllers
@@ -18,12 +12,10 @@ namespace Clinic.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly ClinicContext _context;
-
         public AppointmentsController(ClinicContext context)
         {
             _context = context;
         }
-
         
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
@@ -34,7 +26,6 @@ namespace Clinic.Controllers
             }
             return await _context.Appointments.ToListAsync();
         }
-
         
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(int id)
@@ -52,7 +43,6 @@ namespace Clinic.Controllers
 
             return appointment;
         }
-
         
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAppointment(int id, Appointment appointment)
@@ -61,9 +51,7 @@ namespace Clinic.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(appointment).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -79,10 +67,8 @@ namespace Clinic.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
         
         [HttpPost]
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
@@ -109,10 +95,8 @@ namespace Clinic.Controllers
             {
                 return NotFound();
             }
-
             _context.Appointments.Remove(appointment);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

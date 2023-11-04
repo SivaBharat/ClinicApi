@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using MailKit.Net.Smtp;
 using MimeKit;
 using Microsoft.AspNetCore.Authorization;
-using System.Data;
 
 namespace Clinic.Controllers
 {
@@ -19,13 +13,11 @@ namespace Clinic.Controllers
     public class DoctorsController : ControllerBase
     {
         private readonly ClinicContext _context;
-
         public DoctorsController(ClinicContext context)
         {
             _context = context;
         }
-
-        //[Block]
+        
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctors()
@@ -36,7 +28,6 @@ namespace Clinic.Controllers
             }
             return await _context.Doctors.ToListAsync();
         }
-
        
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin")]
@@ -55,7 +46,6 @@ namespace Clinic.Controllers
 
             return doctor;
         }
-
       
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
@@ -86,7 +76,6 @@ namespace Clinic.Controllers
 
             return NoContent();
         }
-
         
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -98,6 +87,7 @@ namespace Clinic.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetDoctor", new { id = doctor.DoctorId }, doctor);
         }
+
         [HttpPost("SendMail")]
         public ActionResult SendMail([FromBody] EmailResponse emailresponse)
         {

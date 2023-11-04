@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -17,7 +12,6 @@ namespace Clinic.Controllers
     public class AppointmentRequest1Controller : ControllerBase
     {
         private readonly ClinicContext _context;
-
         public AppointmentRequest1Controller(ClinicContext context)
         {
             _context = context;
@@ -32,7 +26,6 @@ namespace Clinic.Controllers
           }
             return await _context.AppointmentRequests1.ToListAsync();
         }
-
         
         [HttpGet("{id}")]
         public async Task<ActionResult<AppointmentRequest1>> GetAppointmentRequest1(int id)
@@ -42,12 +35,10 @@ namespace Clinic.Controllers
               return NotFound();
           }
             var appointmentRequest1 = await _context.AppointmentRequests1.FindAsync(id);
-
             if (appointmentRequest1 == null)
             {
                 return NotFound();
             }
-
             return appointmentRequest1;
         }
 
@@ -59,9 +50,7 @@ namespace Clinic.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(appointmentRequest1).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -77,10 +66,8 @@ namespace Clinic.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
        
         [HttpPost]
         public async Task<ActionResult<AppointmentRequest1>> PostAppointmentRequest1(AppointmentRequest1 appointmentRequest1)
@@ -88,10 +75,8 @@ namespace Clinic.Controllers
             appointmentRequest1.Status = 0;
             _context.AppointmentRequests1.Add(appointmentRequest1);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetAppointmentRequest1", new { id = appointmentRequest1.AppointmentRequestId }, appointmentRequest1);
         }
-
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointmentRequest1(int id)
@@ -105,10 +90,8 @@ namespace Clinic.Controllers
             {
                 return NotFound();
             }
-
             _context.AppointmentRequests1.Remove(appointmentRequest1);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

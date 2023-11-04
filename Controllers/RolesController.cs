@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -17,12 +12,10 @@ namespace Clinic.Controllers
     public class RolesController : ControllerBase
     {
         private readonly ClinicContext _context;
-
         public RolesController(ClinicContext context)
         {
             _context = context;
         }
-
         
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
@@ -33,7 +26,6 @@ namespace Clinic.Controllers
             }
             return await _context.Roles.ToListAsync();
         }
-
        
         [HttpGet("{id}")]
         public async Task<ActionResult<Role>> GetRole(int id)
@@ -43,15 +35,12 @@ namespace Clinic.Controllers
                 return NotFound();
             }
             var role = await _context.Roles.FindAsync(id);
-
             if (role == null)
             {
                 return NotFound();
             }
-
             return role;
         }
-
         
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRole(int id, Role role)
@@ -60,9 +49,7 @@ namespace Clinic.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(role).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -78,10 +65,8 @@ namespace Clinic.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
        
         [HttpPost]
         public async Task<ActionResult<Role>> PostRole(Role role)
@@ -106,10 +91,8 @@ namespace Clinic.Controllers
                     throw;
                 }
             }
-
             return CreatedAtAction("GetRole", new { id = role.RoleId }, role);
         }
-
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
@@ -123,10 +106,8 @@ namespace Clinic.Controllers
             {
                 return NotFound();
             }
-
             _context.Roles.Remove(role);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

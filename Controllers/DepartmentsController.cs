@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Models;
 using Microsoft.AspNetCore.Authorization;
-using System.Data;
 
 namespace Clinic.Controllers
 {
@@ -17,7 +11,6 @@ namespace Clinic.Controllers
     public class DepartmentsController : ControllerBase
     {
         private readonly ClinicContext _context;
-
         public DepartmentsController(ClinicContext context)
         {
             _context = context;
@@ -51,7 +44,6 @@ namespace Clinic.Controllers
 
             return department;
         }
-
      
         [HttpPut("{id}")]
         [Authorize]
@@ -61,9 +53,7 @@ namespace Clinic.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(department).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -79,10 +69,8 @@ namespace Clinic.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
         
         [HttpPost]
         [Authorize]
@@ -94,10 +82,8 @@ namespace Clinic.Controllers
             }
             _context.Departments.Add(department);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetDepartment", new { id = department.DeptId }, department);
         }
-
         
         [HttpDelete("{id}")]
         [Authorize]
@@ -112,10 +98,8 @@ namespace Clinic.Controllers
             {
                 return NotFound();
             }
-
             _context.Departments.Remove(department);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
