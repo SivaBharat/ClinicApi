@@ -19,7 +19,7 @@ namespace Clinic.Controllers
         }
         
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctors()
         {
             if (_context.Doctors == null)
@@ -30,7 +30,7 @@ namespace Clinic.Controllers
         }
        
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<ActionResult<Doctor>> GetDoctor(int id)
         {
             if (_context.Doctors == null)

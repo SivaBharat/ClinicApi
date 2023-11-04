@@ -10,7 +10,7 @@ namespace Clinic.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [TypeFilter(typeof(CustomExceptionFilter))]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class StaffsController : ControllerBase
     {
         private readonly ClinicContext _context;
